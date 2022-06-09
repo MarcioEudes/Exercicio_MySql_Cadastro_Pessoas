@@ -19,24 +19,27 @@ namespace MySQL_Cadastro_Pessoas
         }
         private void bntCadastrar_Click(object sender, EventArgs e)
         {
-            DateTime nascimento = Convert.ToDateTime(txtNascimento.Text);
-
             string conexao = "Server=127.0.0.1;Database=cadastro;Uid=root;Pwd=root;";
+
+            MySqlConnection conexaoMySql = new MySqlConnection(conexao);
+
+            DateTime nascimento = Convert.ToDateTime(txtNascimento.Text);
 
             string Insert = $@"
             insert into pessoas(nome, nascimento, sexo, peso, altura, nacionalidade)
             values
-            ('{ txtNome.Text}', '{nascimento.ToString("yyyy-MM-dd")}', '{txtSexo.Text}', '{txtPeso.Text}', '{txtAltura.Text}', '{txtNacionalidade.Text}')";
-
-            MySqlConnection conexaoMySql = new MySqlConnection(conexao);
+            ('{txtNome.Text}', '{nascimento.ToString("yyyy-MM-dd")}', '{txtSexo.Text}', '{txtPeso.Text}', '{txtAltura.Text}', '{txtNacionalidade.Text}')";
 
             try
             {
                 conexaoMySql.Open();
-                MySqlCommand executarComando = new MySqlCommand(Insert, conexaoMySql);
-                executarComando.ExecuteNonQuery();
+
+                MySqlCommand Comando = new MySqlCommand(Insert, conexaoMySql);
+                Comando.ExecuteNonQuery();
 
                 MessageBox.Show($"Cadastro Efetuado Com Sucesso", "Sucesso", MessageBoxButtons.OK , MessageBoxIcon.Information);
+
+                limpar();
             }
             catch(Exception ex)
             {
@@ -48,6 +51,10 @@ namespace MySQL_Cadastro_Pessoas
             }
         }
         private void bntLimpar_Click(object sender, EventArgs e)
+        {
+            limpar();
+        }
+        private void limpar()
         {
             txtNome.Text = string.Empty;
             txtNascimento.Text = string.Empty;

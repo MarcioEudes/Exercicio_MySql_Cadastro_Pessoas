@@ -181,7 +181,7 @@ namespace MySQL_Cadastro_Pessoas
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNome);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Cadastro";
             this.ResumeLayout(false);
             this.PerformLayout();
 
